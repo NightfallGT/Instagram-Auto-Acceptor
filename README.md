@@ -34,17 +34,19 @@ python file.
 ### How to Use
 - Login 
 - Add the delay
+
 This is optional and you can skip it by just pressing ENTER.
 The time delay is 9 seconds in default.
+
 What this basically does is it tells the script when to scan your
 account for pending requests.
 
-
+- Run 
 You can leave the app running in the background or you can
 use it one time as it bulk accepts your follow requests.
-then you're done!
 
-Be careful in using this appm 
+Close the application or Control + C to stop accepting requests.
+
 ### To Do
 - Add method of solving challenge 
 - GUI
