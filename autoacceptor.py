@@ -5,8 +5,11 @@ from colorama import Fore, init ,Style
 import time
 import os
 from halo import Halo
-
+import random
 init(convert=True)
+
+ITERATION_NUM = 0
+ACCOUNTS_ACCEPTED = 0
 
 class InstagramAccept: 
     def __init__(self,login_data):
@@ -90,68 +93,96 @@ class InstagramAccept:
         return self.csrf_token
    
 
-    def accept_requests(self):
+    def accept_requests(self, user_limit):
         #Accept all requests after getting user ids
+        global ACCOUNTS_ACCEPTED
+        global ITERATION_NUM
+
         self.csrf_token = self._get_csrf()
         self._analyze_requests()
 
+        limit = user_limit
+        count = 0
 
+        ITERATION_NUM += 1
         for a, b in zip(self.pending_usersID,self.pending_usersUSERNAME):
+            mimic_user = random.randint(0,3)
+            time.sleep(mimic_user)
+
             accept_req = self.s.post(f'https://www.instagram.com/web/friendships/{a}/approve/',headers={"x-csrftoken": self.csrf_token})
 
             accept_req_dict = json.loads(accept_req.text)
             
             if accept_req_dict['status'] == "ok":
-                print(f"[*] Approved {b}'s follow request | id: {a}")
+                print(f"[*]  Approved {b}'s follow request | id: {a}")
+                ACCOUNTS_ACCEPTED += 1
+                count += 1
 
             else:
-                print("An error has occured.") 
-                
-    def loop(self):
+                print(f"[!] An error has occured.") 
+        
+
+            if count >= limit:
+                print(f'[!] Breaking out of loop. Limit is ', limit)
+                break
+
+            
+        os.system(f'title Instagram Auto Acceptor V2.6 ^| Iterations: {ITERATION_NUM} ^| Accounts accepted: {ACCOUNTS_ACCEPTED}')   
+    def loop(self,user_limit):
         self._get_activity()
-        self.accept_requests()   
+        self.accept_requests(user_limit)   
+
 
 
 def title():
-    print(f'''{Fore.LIGHTBLACK_EX}https://github.com/nightfall2512{Style.RESET_ALL}{Fore.LIGHTRED_EX}
-    ___         __           ___                        __            
-   /   | __  __/ /_____     /   | _____________  ____  / /_____  _____
-  / /| |/ / / / __/ __ \   / /| |/ ___/ ___/ _ \/ __ \/ __/ __ \/ ___/
- / ___ / /_/ / /_/ /_/ /  / ___ / /__/ /__/  __/ /_/ / /_/ /_/ / /    
-/_/  |_\__,_/\__/\____/  /_/  |_\___/\___/\___/ .___/\__/\____/_/     
-                                             /_/                      
-    
-                                                    {Style.RESET_ALL} by Nightfall#2512                                                                                              
+    print(f'''{Fore.LIGHTBLUE_EX}
+ █████╗ ██╗   ██╗████████╗ ██████╗      █████╗  ██████╗ ██████╗███████╗██████╗ ████████╗ ██████╗ ██████╗ 
+██╔══██╗██║   ██║╚══██╔══╝██╔═══██╗    ██╔══██╗██╔════╝██╔════╝██╔════╝██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗
+███████║██║   ██║   ██║   ██║   ██║    ███████║██║     ██║     █████╗  ██████╔╝   ██║   ██║   ██║██████╔╝
+██╔══██║██║   ██║   ██║   ██║   ██║    ██╔══██║██║     ██║     ██╔══╝  ██╔═══╝    ██║   ██║   ██║██╔══██╗
+██║  ██║╚██████╔╝   ██║   ╚██████╔╝    ██║  ██║╚██████╗╚██████╗███████╗██║        ██║   ╚██████╔╝██║  ██║
+╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═════╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝╚══════╝╚═╝        ╚═╝    ╚═════╝ ╚═╝  ╚═╝
+{Style.RESET_ALL}
+                                                                        by Nightfall#2512                                                                                             
                                                                                                  ''')
 def main():
     s = Style.RESET_ALL 
-    c = Fore.LIGHTRED_EX
+    c = Fore.LIGHTBLUE_EX
     os.system('cls')
     title()
-    os.system('title Instagram Auto Acceptor V3.1 ^| Menu')
+    os.system('title Instagram Auto Acceptor V2.6 ^| Menu')
 
-    input_username = input(f"[!] Instagram Username {c}>{s} ")
-    input_password = input(f"[!] Instagram Password {c}>{s} ")
+    input_username = input(f"[{c}x{s}] Instagram Username: ")
+    input_password = input(f"[{c}x{s}] Instagram Password: ")
     try:
-        input_delay = int(input(f"[!] Check every (in seconds) [Optional] {c}>{s} "))
+        input_delay = int(input(f"[{c}x{s}] Check follow requests queue every (in seconds) [Optional] {c}>{s} "))
     except ValueError:
         input_delay = 9
+
+    try:
+        input_limit = int(input(f"[{c}x{s}] Limit number of accounts to accept in each iteration (int value) [Optional] {c}>{s} "))
+    except ValueError:
+        input_limit = 75
+    
     post =  {'username': input_username, 'enc_password': '#PWD_INSTAGRAM_BROWSER:0:0:' +input_password}
 
-    spinner = Halo(text='Loading', spinner='dots', color='red')
+    spinner = Halo(text='Loading', spinner='dots', color='blue')
 
     spinner.start()
+    os.system('title Instagram Auto Acceptor V2.6 ^| Loading..')
     i = InstagramAccept(post)
     spinner.stop()
+    os.system('title Instagram Auto Acceptor V2.6 ^| Menu')
     os.system('cls')
     title()
 
+    spinner2 = Halo(text=f'Sleeping for {input_delay}s', spinner='dots', color='blue')
     if i.login()== True:     
             while True:   
-                i.loop()
-                spinner.start()
-                time.sleep(input_delay)
-                spinner.stop()
+                i.loop(input_limit)
+                spinner2.start()
+                time.sleep(input_delay)                
+                spinner2.stop()
     else:
         print('[!] User has failed to log in')
         input()
