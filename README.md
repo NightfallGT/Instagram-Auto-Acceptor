@@ -11,7 +11,7 @@ Your account must be private to use this tool.
 
 ## Installation
 ### Get Python
-If you dont have python installed, downlaod python
+If you dont have python installed, download python
 and make sure you click on the 'ADD TO PATH' option during
 the installation.
 
