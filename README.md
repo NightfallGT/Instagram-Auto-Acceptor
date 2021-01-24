@@ -6,7 +6,6 @@ This tool bulk accepts follow requests, meaning it accepts all pending requests 
 
 Your account must be private to use this tool.
 
-Your account must be private to use this tool. 
 ## Picture
 ![Picture](https://i.ibb.co/qDFqw21/Screenshot-35.png)
 
