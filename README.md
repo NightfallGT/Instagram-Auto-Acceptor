@@ -2,7 +2,7 @@
 A script that automatically accepts all your pending follow requests.
 
 ## About
-This tool bulk accepts follow requests, meaning it accepts all pending requests in your account . It then checks/ scans your account every 9 seconds in default for any pending requests. You may change the delay in seconds with the 'check every' delay option. Make sure you 
+This tool bulk accepts follow requests, meaning it accepts all pending requests in your account . It then checks/ scans your account every 9 seconds in default for any pending requests. You may change the delay in seconds, and limit the accounts you will accept in each iteration. Make sure you 
 are already logged on Instagram in the pc you will be using this 
 script in as this does not have a challenge solver yet.
 
