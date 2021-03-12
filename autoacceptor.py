@@ -133,7 +133,7 @@ class InstagramAccept:
                 break
 
         if platform.system().lower() == 'windows':
-            os.system(f'title Instagram Auto Acceptor V2.6 ^| Iterations: {ITERATION_NUM} ^| Accounts accepted: {ACCOUNTS_ACCEPTED}')   
+            os.system(f'title Instagram Auto Acceptor ^| Iterations: {ITERATION_NUM} ^| Accounts accepted: {ACCOUNTS_ACCEPTED}')   
     
     def loop(self,user_limit):
         self._get_activity()
@@ -157,7 +157,7 @@ def main():
     title()
     
     if platform.system().lower() == 'windows':
-        os.system('title Instagram Auto Acceptor V2.6 ^| Menu')
+        os.system('title Instagram Auto Acceptor ^| Menu')
 
     input_username = input(f"[{c}x{s}] Instagram Username: ")
     input_password = input(f"[{c}x{s}] Instagram Password: ")
@@ -178,13 +178,13 @@ def main():
 
     spinner.start()
     if platform.system().lower() == 'windows':
-        os.system('title Instagram Auto Acceptor V2.6 ^| Loading..')
+        os.system('title Instagram Auto Acceptor ^| Loading..')
 
     i = InstagramAccept(post)
     spinner.stop()
 
     if platform.system().lower() == 'windows':
-        os.system('title Instagram Auto Acceptor V2.6 ^| Menu')
+        os.system('title Instagram Auto Acceptor ^| Menu')
 
     clear()
     title()
